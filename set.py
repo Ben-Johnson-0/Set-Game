@@ -2,12 +2,12 @@
 https://en.wikipedia.org/wiki/Set_(card_game)
 
 Card Attributes
- Numbers of shapes:
-    1, 2, 3
- Colors:
-    red, green, purple
  Shapes: 
     diamond, tilde, oval
+ Colors:
+    red, green, purple
+ Numbers of shapes:
+    1, 2, 3
  Shading:
     solid, striped, open
 
@@ -18,22 +18,24 @@ Num of Matches by attributes: (Groups)
  3 same, 1 diff = 324
 """
 import numpy as np
+from itertools import product
 
 N_ATTRIBUTES = 4
 N_VARIANTS = 3
 
 def generate_deck() -> np.array:
     """
-    Creates the 81 card deck from the game Set as an np.array of shape (81,4).
+    Generate the 81-card Set deck as a NumPy array of shape (81, 4).
+    Each row represents one card, with 4 integer attributes (0–2).
+    
+    Example card representation:
+        [shape, color, number, shading]
+    
+    Returns:
+        np.ndarray: Full deck with values in [0, N_VARIANTS-1].
     """
-    deck = []
-    options = range(N_VARIANTS)
-    for i in options:
-        for j in options:
-            for k in options:
-                for l in options:
-                    deck.append([i, j, k, l])
-    return np.array(deck, dtype=np.int8)
+    deck = np.array(list(product(range(N_VARIANTS), repeat=N_ATTRIBUTES)), dtype=np.int8)
+    return deck
 
 def check_set(potential_set: np.array) -> bool:
     """
