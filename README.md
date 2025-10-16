@@ -3,6 +3,33 @@
 A recreation of the card game Set by Marsha Falco.
 [Set Wiki Page](https://en.wikipedia.org/wiki/Set_(card_game))
 
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Ben-Johnson-0/Set-Game.git
+cd set-game
+```
+Create a virtual environment (optional but recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+Run the game
+```bash
+python gui.py
+```
+
+## Goal
+
+The goal is for player(s) to find sets of three cards. A set is a group of cards where each of the attributes of the cards are either all the same variation or none of them are the same.
+
+
 ## Cards
 
 Cards have 4 different attributes with each attribute having 3 variations.
@@ -11,10 +38,6 @@ Cards have 4 different attributes with each attribute having 3 variations.
 | Oval    | Red    | 1      | Solid   |
 | Tilde   | Green  | 2      | Striped |
 | Diamond | Purple | 3      | Open    |
-
-## Goal
-
-The goal is for player(s) to find sets of three cards. A set is a group of cards where each of the attributes of the cards are either all the same variation or none of them are the same.
 
 
 ## Gameplay Overview
@@ -38,11 +61,11 @@ The goal is for player(s) to find sets of three cards. A set is a group of cards
 
 ## Planned Features
 
-* Player mode
+* Prettier GUI
 
-* Player mode GUI
+* Hint highlighting
 
-* Hint button
+* Sound Effects
 
 ## License
 

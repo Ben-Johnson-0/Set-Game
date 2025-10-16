@@ -1,2 +1,0 @@
-Create Player mode
-Create GUI for Player mode
