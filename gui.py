@@ -13,8 +13,14 @@ class SetGUI(tk.Tk):
         super().__init__()
         self.title("Set Game")
         self.configure(bg="#f5f5f5")
+
         self.renderer = CardRenderer()
         self.game = SetGame()
+
+        # Game Vars
+        self.matches_var = tk.IntVar(value=self.game.matches)
+        self.score_var = tk.IntVar(value=0)
+        self.hints_var = tk.IntVar(value=0)
 
         # Build UI
         self.card_images = []
@@ -23,10 +29,21 @@ class SetGUI(tk.Tk):
         self.create_widgets()
         self.render_cards()
 
+
     def create_widgets(self):
         """Creates and Packs basic menu/control buttons"""
         self.card_frame = tk.Frame(self, bg="#f5f5f5")
         self.card_frame.pack(padx=20, pady=20)
+
+        # Score label
+        score_frame = tk.Frame(self, bg="#f5f5f5")
+        score_frame.pack(pady=(0, 5))
+        tk.Label(score_frame, text="Score:", width=12, bg="#f5f5f5").pack(side=tk.LEFT)
+        tk.Label(score_frame, textvariable=self.score_var, bg="#f5f5f5").pack(side=tk.LEFT, padx=5)
+        tk.Label(score_frame, text="Sets Found:", width=12, bg="#f5f5f5").pack(side=tk.LEFT)
+        tk.Label(score_frame, textvariable=self.matches_var, bg="#f5f5f5").pack(side=tk.LEFT, padx=5)
+        tk.Label(score_frame, text="Hints Used:", width=12, bg="#f5f5f5").pack(side=tk.LEFT)
+        tk.Label(score_frame, textvariable=self.hints_var, bg="#f5f5f5").pack(side=tk.LEFT, padx=5)
 
         # Control buttons
         controls = tk.Frame(self, bg="#f5f5f5")
@@ -69,7 +86,8 @@ class SetGUI(tk.Tk):
         if len(self.game.selected) == 3:
             result : bool = self.game.submit_selection()
             if result:
-                messagebox.showinfo("Set Found!", "That's a valid Set!")
+                self.matches_var.set(self.game.matches)
+                self.score_var.set(self.matches_var.get() - self.hints_var.get())
             else:
                 messagebox.showwarning("Not a Set", f"That combination is not valid.\n{self.game.board[self.game.selected]}")
 
@@ -77,11 +95,14 @@ class SetGUI(tk.Tk):
 
     def new_game(self):
         self.game = SetGame()
+        self.matches_var.set(self.game.matches)
         self.render_cards()
 
     def show_hint(self):
         isFound, hint, _ = self.game.find_set()
         if isFound:
+            self.hints_var.set(self.hints_var.get() + 1)
+            self.score_var.set(self.matches_var.get() - self.hints_var.get())
             messagebox.showinfo("Hint", f"Possible set at indices: {hint}")
         else:
             messagebox.showinfo("Hint", "No sets available!")
