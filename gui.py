@@ -96,6 +96,8 @@ class SetGUI(tk.Tk):
     def new_game(self):
         self.game = SetGame()
         self.matches_var.set(self.game.matches)
+        self.hints_var.set(0)
+        self.score_var.set(0)
         self.render_cards()
 
     def show_hint(self):
